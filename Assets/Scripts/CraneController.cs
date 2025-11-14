@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class CraneController : MonoBehaviour
 {    
     [SerializeField, Range(0, 10)]
     private float _moveSpeed;
