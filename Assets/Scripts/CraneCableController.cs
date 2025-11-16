@@ -12,7 +12,7 @@ public class CraneCableController : MonoBehaviour
     [Space(10)]
     [Header("Settings")]
     [SerializeField]
-    private float lenghtFactor = 10f;
+    private float _lenghtFactor = 10f;
     [SerializeField]
     private float _minLenght = 0.2f;
     [SerializeField]
@@ -42,8 +42,8 @@ public class CraneCableController : MonoBehaviour
         if (_moveAction == null) return;
 
         float move = _moveAction.action.ReadValue<float>();
-        Debug.Log("Move input: " + move);
-        float delta = move * lenghtFactor * Time.fixedDeltaTime;
+        //Debug.Log("Move input: " + move);
+        float delta = move * _lenghtFactor * Time.fixedDeltaTime;
 
         foreach (ConfigurableJoint joint in _joints)
         {
@@ -53,8 +53,7 @@ public class CraneCableController : MonoBehaviour
 
             if (Mathf.Approximately(newLimit, limit.limit))
                 continue;
-
-            //похоже лимит у меня работает как индикатор опускания и поднятия
+            
             limit.limit = newLimit;
             joint.linearLimit = limit;
         }
