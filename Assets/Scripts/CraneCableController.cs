@@ -54,6 +54,7 @@ public class CraneCableController : MonoBehaviour
             if (Mathf.Approximately(newLimit, limit.limit))
                 continue;
 
+            //похоже лимит у меня работает как индикатор опускания и поднятия
             limit.limit = newLimit;
             joint.linearLimit = limit;
         }
