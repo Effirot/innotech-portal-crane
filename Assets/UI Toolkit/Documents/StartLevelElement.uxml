@@ -1,0 +1,21 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Button name="layout" class="button-level-element" style="flex-grow: 0; background-color: rgb(0, 0, 0); border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; width: 170px; height: 300px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; overflow: hidden; cursor: initial;">
+        <ui:VisualElement name="icon" style="flex-grow: 1;">
+            <Bindings>
+                <ui:DataBinding property="style.backgroundImage" data-source-path="_image" data-source-type="Level, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Label text="Label" name="LabelName" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Regular&quot;); color: rgb(255, 255, 255); align-self: center;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="_levelName" data-source-type="Level, Assembly-CSharp" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:Label>
+            <ui:Label text="Label" name="LabelDesc" style="color: rgb(255, 255, 255); -unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Regular&quot;); align-self: center;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="_description" data-source-type="Level, Assembly-CSharp" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:Label>
+        </ui:VisualElement>
+    </ui:Button>
+</ui:UXML>

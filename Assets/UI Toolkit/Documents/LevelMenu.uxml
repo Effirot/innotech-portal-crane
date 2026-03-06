@@ -1,0 +1,15 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="StartLevelElement" src="project://database/Assets/UI%20Toolkit/Documents/StartLevelElement.uxml?fileID=9197481963319205126&amp;guid=c0a09856a9b22a3468810dd919f07f19&amp;type=3#StartLevelElement"/>
+    <ui:VisualElement style="flex-grow: 1;"/>
+    <ui:VisualElement name="description-list" style="flex-grow: 1; flex-direction: column; flex-wrap: wrap;">
+        <ui:Instance template="StartLevelElement" data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Level%201.asset?fileID=11400000&amp;guid=9d30b033ab107b54693ff02ac036844f&amp;type=2#Level 1"/>
+        <ui:Instance template="StartLevelElement" data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Level%202.asset?fileID=11400000&amp;guid=1346608ef6241b5489adc3a56608038e&amp;type=2#Level 2" style="background-position-x: center;"/>
+        <ui:Instance template="StartLevelElement" data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Level%203.asset?fileID=11400000&amp;guid=834a36aef2f446c47ab8580d394fd326&amp;type=2#Level 3"/>
+        <ui:Instance template="StartLevelElement" data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Level%204.asset?fileID=11400000&amp;guid=a4aeb774a03286f44ba2a6ab3e2620c3&amp;type=2#Level 4"/>
+        <ui:Instance template="StartLevelElement" data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Level%205.asset?fileID=11400000&amp;guid=510b3a81963fde1419eb8d002a614c1d&amp;type=2#Level 5"/>
+        <ui:Instance template="StartLevelElement" data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Level%206.asset?fileID=11400000&amp;guid=73a289ef74157f64eb85c13f37ed3db4&amp;type=2#Level 6"/>
+        <ui:Instance template="StartLevelElement" data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Level%207.asset?fileID=11400000&amp;guid=139fb2e59d2f32143849f7b36ca10a79&amp;type=2#Level 7"/>
+        <ui:Instance template="StartLevelElement" data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Level%208.asset?fileID=11400000&amp;guid=0b70fecc0d6792c44b2d7390ec241cac&amp;type=2#Level 8"/>
+    </ui:VisualElement>
+    <ui:VisualElement data-source="project://database/Assets/Scripts/Levels/ScriptableObjects/Levels.asset?fileID=11400000&amp;guid=a54fda059af7bcc44ad82eb9834bb233&amp;type=2#Levels" name="VisualElement" style="flex-grow: 1;"/>
+</ui:UXML>
