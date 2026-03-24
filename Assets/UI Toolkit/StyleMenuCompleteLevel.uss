@@ -1,0 +1,41 @@
+.visual-element {
+    background-color: rgb(255, 235, 59);
+    border-radius: 20px;
+    padding: 20px;
+
+    width: 400px;
+    height: 250px;
+
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+
+    border-width: 2px;
+    border-color: rgb(0, 0, 0);
+}
+
+.label {
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    -unity-font-style: bold;
+    margin-bottom: 20px;
+}
+
+.button {
+    background-color: #000000;
+    color: rgb(255, 235, 59);
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 16px;
+    -unity-font-style: bold;
+    border-width: 0;
+    transition-duration: 0.1s;
+}
+
+.button:hover {
+    background-color: #333333;
+}
+
+.button:active {
+    background-color: rgb(189, 189, 189);
+}

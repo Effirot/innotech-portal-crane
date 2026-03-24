@@ -2,21 +2,37 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class LevelsTransitions: MonoBehaviour
 {
     [SerializeField]
     private List<Level> _levelsData = new ();
+    [SerializeField] private LoadLevel _loadLevel;
 
     [SerializeField]
     private List<LevelsPoitsGroup> _levelsPoitsGroups = new ();
 
     [SerializeField, Range(0, 10)]
     private int _currentLevelIndex = 0;
+    private int _pastLevelIndex = 0;
 
     private FinalDotTrigger _currentTrigger;
 
     public event Action<LevelData> OnLevelChanged;
+    
+    [SerializeField]
+    private UILevel _uiLevel;
+
+    private void OnEnable()
+    {
+        if (_loadLevel != null) _loadLevel.OnLevelSelected += HandLevelSelected;
+    }
+
+    private void OnDisable()
+    {
+        if (_loadLevel != null) _loadLevel.OnLevelSelected -= HandLevelSelected;
+    }
 
     private void Awake()
     {
@@ -41,6 +57,8 @@ public class LevelsTransitions: MonoBehaviour
     {
         if(currentLevelIndex >= _levelsPoitsGroups.Count || currentLevelIndex >= _levelsData.Count) return;
 
+        _levelsPoitsGroups[_pastLevelIndex].SetActive(false);
+        _pastLevelIndex = currentLevelIndex;
         _levelsPoitsGroups[currentLevelIndex].SetActive(true);
 
         _currentTrigger = _levelsPoitsGroups[currentLevelIndex].GetComponentInChildren<FinalDotTrigger>();
@@ -53,6 +71,7 @@ public class LevelsTransitions: MonoBehaviour
         //добавить активацию ui
 
         Debug.Log(_levelsData[currentLevelIndex].LevelName);
+        _uiLevel.UpdateUILevel(_levelsData[currentLevelIndex].LevelName, _levelsData[currentLevelIndex].Description);
         Debug.Log(_levelsData[currentLevelIndex].Description);
     }
 
@@ -69,6 +88,14 @@ public class LevelsTransitions: MonoBehaviour
 
         if(_currentLevelIndex >= _levelsData.Count) return;
 
-        ActivateLevel(_currentLevelIndex);        
+        _uiLevel.OpenCompeleMenu();        
+
+        //ActivateLevel(_currentLevelIndex);        
+    }
+
+    private void HandLevelSelected(int index)
+    {
+        _currentLevelIndex = index;
+        ActivateLevel(_currentLevelIndex);
     }
 }

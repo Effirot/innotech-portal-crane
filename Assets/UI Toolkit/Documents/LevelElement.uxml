@@ -1,0 +1,15 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/StyleLevelElement.uss?fileID=7433441132597879392&amp;guid=fbcd9b0bf896937439de31763b9dc633&amp;type=3#StyleLevelElement"/>
+    <ui:Button name="layout" class="button-level-element">
+        <ui:Label text="Задание" name="LabelName" class="level-name" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Regular&quot;);">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="_levelName" data-source-type="Level, Assembly-CSharp" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:Label>
+        <ui:Label text="Разместите котейнер на выделенной области" name="LabelDesc" class="level-description" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Regular&quot;);">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="_description" data-source-type="Level, Assembly-CSharp" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:Label>
+    </ui:Button>
+</ui:UXML>

@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/StyleMenuCompleteLevel.uss?fileID=7433441132597879392&amp;guid=498bf9e8496c9574582d1f2137319f95&amp;type=3#StyleMenuCompleteLevel"/>
+    <ui:VisualElement name="description-list" class="visual-element">
+        <ui:Label text="Ура! Уровень пройден!" class="label" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Regular&quot;);"/>
+        <ui:Button name="ToggleButton" text="Нажмите для продолжения" focusable="true" class="button" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Regular&quot;);"/>
+    </ui:VisualElement>
+</ui:UXML>

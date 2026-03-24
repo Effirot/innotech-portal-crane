@@ -1,0 +1,40 @@
+.button-level-element {
+    flex-grow: 0; 
+    background-color: rgb(255, 235, 59);
+    border-radius: 20px;
+    border-color: rgb(0, 0, 0);
+    border-width: 2px;
+
+    width: 336px;
+    height: 100px;
+    margin: 5px;
+    overflow: hidden;
+    cursor: initial;
+    position: absolute;
+    top: 780px;
+    left: auto;
+    right: auto; bottom: 0; 
+    justify-content: center; 
+    align-self: center;
+    align-content: flex-end; 
+    padding: 20px;
+    flex-shrink: 0;
+    flex-direction: column;
+}
+
+.level-name {
+     color: rgb(0, 0, 0);
+     -unity-text-align: middle-center; 
+     -unity-font-style: bold;
+     white-space: normal;
+     font-size: 36px;
+}
+
+.level-description {
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    -unity-font-style: bold;
+    margin-bottom: 10px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}

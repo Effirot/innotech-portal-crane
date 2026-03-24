@@ -1,0 +1,41 @@
+.icon{
+    height: 50%;
+}
+
+.button-level-element {
+    flex-grow: 0;
+    background-color: rgb(255, 235, 59);
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: rgb(0, 0, 0);
+    width: 170px; 
+    height: 300px;
+    margin: 5px; 
+    overflow: hidden; 
+    cursor: initial;
+    padding: 0;
+}
+
+.button-level-element:hover {
+    background-color: rgb(230, 210, 50);
+}
+
+.button-level-element:active {
+    background-color: rgb(189, 189, 189);
+}
+
+.label-name {
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    -unity-font-style: bold;
+    align-self: center;
+    -unity-text-align: middle-center;
+}
+
+.label-desc {
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    align-self: center;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}

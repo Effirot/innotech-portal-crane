@@ -13,6 +13,8 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - TVE_ALPHA_CLIP
+  - _DISABLE_DECALS
+  - _DISABLE_SSR
   m_InvalidKeywords:
   - TVE_FEATURE_CLIP
   m_LightmapFlags: 0
