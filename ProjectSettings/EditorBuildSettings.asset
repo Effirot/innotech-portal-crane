@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CraneScene.unity
     guid: 5077f0af96fbb23449aceb228684554e
+  - enabled: 1
+    path: Assets/Scenes/MenuScene.unity
+    guid: 0e1152976c411b042849c0c784e8204b
+  - enabled: 1
+    path: Assets/Scenes/CraneWithTerrain.unity
+    guid: ffddfec4dfe172d408d9ffe290e751c1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: f782ff6f1ad2e3d49b843cca086746d1, type: 3}
   m_UseUCBPForAssetBundles: 0

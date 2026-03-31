@@ -5,7 +5,7 @@
     border-color: rgb(0, 0, 0);
     border-width: 2px;
 
-    width: 336px;
+    width: 600px;
     height: 100px;
     margin: 5px;
     overflow: hidden;
@@ -27,7 +27,7 @@
      -unity-text-align: middle-center; 
      -unity-font-style: bold;
      white-space: normal;
-     font-size: 36px;
+     font-size: 24px;
 }
 
 .level-description {

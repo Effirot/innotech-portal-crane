@@ -3,12 +3,23 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class UILevel : MonoBehaviour
 {
     [SerializeField]
     private UIDocument _document;
     [SerializeField]
     private UIDocument _documentCompleteMenu;
+/*#if UNITY_EDITOR
+    [SerializeField]
+    private SceneAsset SceneAsset;
+#endif
+
+    [SerializeField, HideInInspector]
+    private string _sceneName;*/
 
     private void Awake()
     {
@@ -19,21 +30,28 @@ public class UILevel : MonoBehaviour
         var nextButton = _documentCompleteMenu.rootVisualElement.Q<Button>("ToggleButton");
         if (nextButton != null)
         {
+            
             nextButton.clicked += () => {
                 Time.timeScale = 1;
+                Debug.Log("LoadScene");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             };
         }
     }
 
+/*#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        _sceneName = SceneAsset.name;
+    }
+#endif*/
+
     public void UpdateUILevel(string name, string description)
     {
         var root = _document.rootVisualElement;
 
-        var a = root.Q<Label>("LabelName");
-        a.text = name;
         var b = root.Q<Label>("LabelDesc");
-        b.text = description;
+        b.text = name;
 
     }
 

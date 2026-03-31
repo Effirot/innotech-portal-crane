@@ -1,5 +1,5 @@
-.icon{
-    height: 50%;
+.icon {
+    height: 40%;
 }
 
 .button-level-element {
@@ -8,12 +8,13 @@
     border-radius: 20px;
     border-width: 2px;
     border-color: rgb(0, 0, 0);
-    width: 170px; 
-    height: 300px;
-    margin: 5px; 
-    overflow: hidden; 
+    width: 500px;
+    height: 500px;
+    margin: 5px;
+    overflow: hidden;
     cursor: initial;
     padding: 0;
+    font-size: 10px;
 }
 
 .button-level-element:hover {
@@ -30,6 +31,7 @@
     -unity-font-style: bold;
     align-self: center;
     -unity-text-align: middle-center;
+    white-space: normal;
 }
 
 .label-desc {

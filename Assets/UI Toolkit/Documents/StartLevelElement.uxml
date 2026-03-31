@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/StyleStartLevelElement.uss?fileID=7433441132597879392&amp;guid=93583a5aea681da47b3d68a329ae6727&amp;type=3#StyleStartLevelElement"/>
-    <ui:Button name="ButtonLevel" class="button-level-element">
-        <ui:VisualElement name="icon" class="icon" style="flex-grow: 1;">
+    <ui:Button name="ButtonLevel" class="button-level-element" style="height: 878px; width: 515px;">
+        <ui:VisualElement name="icon" class="icon" style="flex-grow: 0; height: 40%;">
             <Bindings>
                 <ui:DataBinding property="style.backgroundImage" data-source-path="_image" data-source-type="Level, Assembly-CSharp" binding-mode="ToTarget"/>
             </Bindings>

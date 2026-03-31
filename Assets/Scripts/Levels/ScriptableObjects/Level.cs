@@ -5,7 +5,7 @@ public class Level : ScriptableObject
 {
     [SerializeField, TextArea]
     private string _levelName;//Уровень 1
-    [SerializeField, TextArea]
+    [SerializeField, TextArea(3, 20)]
     private string _description;//доставить 1 груз, далее для слудущего уровня доставить 2 груз и тд
     [SerializeField]
     private Sprite _image;
