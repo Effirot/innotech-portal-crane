@@ -1,5 +1,5 @@
 ﻿.visual-element {
-    background-color: rgb(255, 235, 59);
+    background-color: rgb(10, 15, 30); /* тёмный фон */
     border-radius: 20px;
     padding: 20px;
 
@@ -11,22 +11,26 @@
     justify-content: center;
 
     border-width: 2px;
-    border-color: rgb(0, 0, 0);
+    border-color: rgb(0, 200, 255); /* неоновая рамка */
+
+    box-shadow: 0 0 15px rgba(0, 200, 255, 0.5); /* свечение */
 }
 
 .label {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size: 26px;
     -unity-font-style: bold;
 
     margin-bottom: 20px;
 
     unity-text-align: middle-center;
+
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.8);
 }
 
 .button {
-    background-color: #000000;
-    color: rgb(255, 235, 59);
+    background-color: rgb(15, 25, 50); /* тёмно-синий */
+    color: rgb(0, 200, 255); /* неоновый текст */
 
     border-radius: 12px;
     padding: 12px 24px;
@@ -34,18 +38,24 @@
     font-size: 16px;
     -unity-font-style: bold;
 
-    border-width: 0;
+    border-width: 2px;
+    border-color: rgb(0, 200, 255);
 
     margin-top: 10px;
     width: 200px;
 
     transition-duration: 0.1s;
+
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.4);
 }
 
 .button:hover {
-    background-color: #333333;
+    background-color: rgb(25, 40, 80);
+    border-color: rgb(120, 0, 255); /* фиолетовый акцент */
+    box-shadow: 0 0 15px rgba(120, 0, 255, 0.7);
 }
 
 .button:active {
-    background-color: rgb(189, 189, 189);
+    background-color: rgb(5, 10, 20);
+    box-shadow: 0 0 5px rgba(0, 200, 255, 0.3);
 }
