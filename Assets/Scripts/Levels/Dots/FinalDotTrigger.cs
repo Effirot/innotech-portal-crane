@@ -13,6 +13,7 @@ public class FinalDotTrigger: MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"TRIGGER by {other.name}, root={other.transform.root.name}, bounds={other.bounds}", other);
         if(!other.CompareTag(_tagObject)) return;
 
         OnTriggered?.Invoke();
