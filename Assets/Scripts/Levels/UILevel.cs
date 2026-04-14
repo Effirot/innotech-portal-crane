@@ -13,6 +13,8 @@ public class UILevel : MonoBehaviour
     private UIDocument _document;
     [SerializeField]
     private UIDocument _documentCompleteMenu;
+
+    private bool _isMenuOpen = false;
 /*#if UNITY_EDITOR
     [SerializeField]
     private SceneAsset SceneAsset;
@@ -33,6 +35,10 @@ public class UILevel : MonoBehaviour
             
             nextButton.clicked += () => {
                 Time.timeScale = 1;
+
+                if (SoundManager.Instance != null)
+                    SoundManager.Instance.ResumeAllCraneSounds();
+
                 Debug.Log("LoadScene");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             };
@@ -66,6 +72,12 @@ public class UILevel : MonoBehaviour
 
             menuElement.style.display = DisplayStyle.Flex;
             Time.timeScale = 0;
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PauseAllCraneSounds();
+                SoundManager.Instance?.PlayLevelComplete();
+            }
         }
 
         //_documentCompleteMenu.rootVisualElement.Q<VisualElement>("description-list").style.display = DisplayStyle.Flex;

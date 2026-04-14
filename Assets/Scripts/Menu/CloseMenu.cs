@@ -39,11 +39,17 @@ public class CloseMenu : MonoBehaviour
         {
             _document.rootVisualElement.Q<VisualElement>("description-list").style.display = DisplayStyle.Flex;
             Time.timeScale = 0;
+
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PauseAllCraneSounds();
         }
         else
         {
             _document.rootVisualElement.Q<VisualElement>("description-list").style.display = DisplayStyle.None;
             Time.timeScale = 1;
+
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.ResumeAllCraneSounds();
         }
 
         

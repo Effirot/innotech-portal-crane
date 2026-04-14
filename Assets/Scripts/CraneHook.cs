@@ -62,9 +62,13 @@ public class CraneHook : MonoBehaviour
         if (hookedObject == null)
         {
             hookedObject = selectedHookedObject;
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlayHookAttach();
         }
         else
         {
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlayHookAttach();
             hookedObject = null;
         }
     }

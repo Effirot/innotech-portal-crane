@@ -39,6 +39,12 @@ public class LevelsTransitions: MonoBehaviour
         Initialize();
     }
 
+    private void Start()
+    {
+        SoundManager.Instance?.PlayCraneEngine();
+        SoundManager.Instance?.PlayOceanAmbience();
+    }
+
     /// <summary>
     /// отключение всех групп точек
     /// влючение уровня с определением по индексу
@@ -82,11 +88,17 @@ public class LevelsTransitions: MonoBehaviour
             _currentTrigger.OnTriggered.RemoveListener(CompleteLevel);
         }
 
+        SoundManager.Instance?.StopCraneEngine();
+        SoundManager.Instance?.StopCraneRotate();
+        SoundManager.Instance?.StopCraneWinch();
+
         _levelsPoitsGroups[_currentLevelIndex].SetActive(false);        
 
         _currentLevelIndex++;
 
         if(_currentLevelIndex >= _levelsData.Count) return;
+
+        SoundManager.Instance?.PlayLevelComplete();  // ← звук завершения
 
         _uiLevel.OpenCompeleMenu();        
 

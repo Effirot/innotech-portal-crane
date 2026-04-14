@@ -31,6 +31,10 @@ public class CraneMovement : MonoBehaviour
     [SerializeField, Range(0, 100)]
     private float rotationBlendingDamping = 10;
 
+    [SerializeField] private bool playRotateSound = true;
+
+    private bool wasRotating = false;
+
 
     private float movementSpeedBleending;
     private float torqueSpeedBleending;
@@ -47,6 +51,21 @@ public class CraneMovement : MonoBehaviour
 
         torqueSpeedBleending = Mathf.Lerp(torqueSpeedBleending, movementAxis.x * rotationBlendingSpeed, rotationBlendingDamping * Time.fixedDeltaTime);
         angle += torqueSpeedBleending;
+
+        if (SoundManager.Instance != null)
+        {
+            bool isRotating = Mathf.Abs(torqueSpeedBleending) > 0.01f;
+
+            if (isRotating && !wasRotating)
+            {
+                SoundManager.Instance.PlayCraneRotate();
+            }
+            else if (!isRotating && wasRotating)
+            {
+                SoundManager.Instance.StopCraneRotate();
+            }
+            wasRotating = isRotating;
+        }
 
         movementSpeedBleending = Mathf.Lerp(movementSpeedBleending, movementAxis.y * positionBlendingSpeed, Time.fixedDeltaTime * positionBlendingDamping);
         blend = Mathf.Clamp01(blend + movementSpeedBleending);
