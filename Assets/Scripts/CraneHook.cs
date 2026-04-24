@@ -15,6 +15,10 @@ public class CraneHook : MonoBehaviour
     private HookableObject hookedObject;
     private HookableObject selectedHookedObject;
 
+    // Поля для хранения начального смещения относительно крюка
+    private Vector3 initialOffsetPos;
+    private Quaternion initialOffsetRot;
+
     private void OnEnable()
     {
         hookAction.action.performed += OnClicked_Input;
@@ -42,26 +46,41 @@ public class CraneHook : MonoBehaviour
     {
         if (hookedObject)
         {
-            var pivot = this.pivot ? this.pivot : transform;
+            var pivotTransform = this.pivot ? this.pivot : transform;
 
-            hookedObject.GetAnchoredLocalPosition(out var pos, out var rot);
-            hookedObject.transform.position = pivot.transform.position - (rot * pos);
-            hookedObject.transform.rotation = pivot.transform.rotation * rot;
+            // Используем зафиксированные начальные значения для расчета позиции
+            // Это предотвращает дрожание, так как мы не зависим от текущего вращения объекта
+            hookedObject.transform.position = pivotTransform.position - (initialOffsetRot * initialOffsetPos);
+            
+            // Если нужно, чтобы объект вообще не вращался относительно крюка:
+            hookedObject.transform.rotation = pivotTransform.rotation * initialOffsetRot;
+            
+            // Если нужно "слегка" вращение (физика), можно закомментировать строку выше, 
+            // но тогда позиция все равно должна считаться по фиксированным данным, 
+            // либо использовать Joint (см. Вариант 2).
         }
     }
 
     private void OnValidate()
     {
         var collider = GetComponent<Collider>();
-        collider.isTrigger = true;
+        if (collider != null)
+            collider.isTrigger = true;
     }
-
 
     private void OnClicked_Input(CallbackContext context)
     {
         if (hookedObject == null)
         {
             hookedObject = selectedHookedObject;
+            if (hookedObject != null)
+            {
+                var pivotTransform = this.pivot ? this.pivot : transform;
+                
+                // Запоминаем начальное смещение в момент захвата
+                hookedObject.GetAnchoredLocalPosition(out initialOffsetPos, out initialOffsetRot);
+            }
+
             if (SoundManager.Instance != null)
                 SoundManager.Instance.PlayHookAttach();
         }
@@ -69,6 +88,15 @@ public class CraneHook : MonoBehaviour
         {
             if (SoundManager.Instance != null)
                 SoundManager.Instance.PlayHookAttach();
+            
+            // Сброс скоростей при отпускании, чтобы объект не "улетал"
+            var rb = hookedObject.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+
             hookedObject = null;
         }
     }
