@@ -15,9 +15,11 @@ public class CraneHook : MonoBehaviour
     private HookableObject hookedObject;
     private HookableObject selectedHookedObject;
 
-    // Поля для хранения начального смещения относительно крюка
+    // Смещение позиции (вектор от пивота до якоря в локальных координатах пивота)
     private Vector3 initialOffsetPos;
-    private Quaternion initialOffsetRot;
+    
+    // Разница во вращении между объектом и пивотом в момент захвата
+    private Quaternion rotationDifference;
 
     private void OnEnable()
     {
@@ -48,16 +50,16 @@ public class CraneHook : MonoBehaviour
         {
             var pivotTransform = this.pivot ? this.pivot : transform;
 
-            // Используем зафиксированные начальные значения для расчета позиции
-            // Это предотвращает дрожание, так как мы не зависим от текущего вращения объекта
-            hookedObject.transform.position = pivotTransform.position - (initialOffsetRot * initialOffsetPos);
-            
-            // Если нужно, чтобы объект вообще не вращался относительно крюка:
-            hookedObject.transform.rotation = pivotTransform.rotation * initialOffsetRot;
-            
-            // Если нужно "слегка" вращение (физика), можно закомментировать строку выше, 
-            // но тогда позиция все равно должна считаться по фиксированным данным, 
-            // либо использовать Joint (см. Вариант 2).
+            // 1. Расчет позиции
+            // Позиция пивота + (смещение, повернутое на текущий угол пивота)
+            // Это гарантирует, что точка захвата (anchor) всегда находится точно под/на крюке
+            Vector3 targetPosition = pivotTransform.position + (pivotTransform.rotation * initialOffsetPos);
+            hookedObject.transform.position = targetPosition;
+
+            // 2. Расчет вращения
+            // Текущее вращение пивота * разницу, сохраненную при захвате
+            // Это заставляет объект вращаться синхронно с крюком
+            hookedObject.transform.rotation = pivotTransform.rotation * rotationDifference;
         }
     }
 
@@ -77,8 +79,21 @@ public class CraneHook : MonoBehaviour
             {
                 var pivotTransform = this.pivot ? this.pivot : transform;
                 
-                // Запоминаем начальное смещение в момент захвата
-                hookedObject.GetAnchoredLocalPosition(out initialOffsetPos, out initialOffsetRot);
+                // --- РАСЧЕТ ПОЗИЦИИ ---
+                // Нам нужно знать вектор от Пивота (крюка) до Якоря (точки на контейнере) в момент захвата.
+                Vector3 anchorWorldPosition = hookedObject.anchor ? hookedObject.anchor.position : hookedObject.transform.position;
+                Vector3 worldOffset = anchorWorldPosition - pivotTransform.position;
+                
+                // Переводим этот вектор в локальную систему координат пивота.
+                // Теперь, когда пивот будет вращаться, мы сможем повернуть этот локальный вектор обратно в мировой,
+                // и он всегда будет указывать на правильное место относительно крюка.
+                initialOffsetPos = Quaternion.Inverse(pivotTransform.rotation) * worldOffset;
+
+                // --- РАСЧЕТ ВРАЩЕНИЯ ---
+                // Сохраняем "разницу" между вращением объекта и вращением пивота.
+                // Формула: RotationObject = RotationPivot * Difference
+                // Следовательно: Difference = Inverse(RotationPivot) * RotationObject
+                rotationDifference = Quaternion.Inverse(pivotTransform.rotation) * hookedObject.transform.rotation;
             }
 
             if (SoundManager.Instance != null)
@@ -89,7 +104,7 @@ public class CraneHook : MonoBehaviour
             if (SoundManager.Instance != null)
                 SoundManager.Instance.PlayHookAttach();
             
-            // Сброс скоростей при отпускании, чтобы объект не "улетал"
+            // Сброс скоростей при отпускании
             var rb = hookedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
