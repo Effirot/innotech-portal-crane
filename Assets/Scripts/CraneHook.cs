@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
@@ -12,13 +13,16 @@ public class CraneHook : MonoBehaviour
     [SerializeField]
     private Transform pivot;
 
+    [SerializeField] private float alignSpeed = 2f;     
+    [SerializeField] private float attachAngle = 2f;    
+
+    private bool isAligning = false;
+
     private HookableObject hookedObject;
     private HookableObject selectedHookedObject;
 
-    // Смещение позиции (вектор от пивота до якоря в локальных координатах пивота)
     private Vector3 initialOffsetPos;
     
-    // Разница во вращении между объектом и пивотом в момент захвата
     private Quaternion rotationDifference;
 
     private void OnEnable()
@@ -46,19 +50,15 @@ public class CraneHook : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (isAligning) return;
+
         if (hookedObject)
         {
             var pivotTransform = this.pivot ? this.pivot : transform;
 
-            // 1. Расчет позиции
-            // Позиция пивота + (смещение, повернутое на текущий угол пивота)
-            // Это гарантирует, что точка захвата (anchor) всегда находится точно под/на крюке
             Vector3 targetPosition = pivotTransform.position + (pivotTransform.rotation * initialOffsetPos);
             hookedObject.transform.position = targetPosition;
 
-            // 2. Расчет вращения
-            // Текущее вращение пивота * разницу, сохраненную при захвате
-            // Это заставляет объект вращаться синхронно с крюком
             hookedObject.transform.rotation = pivotTransform.rotation * rotationDifference;
         }
     }
@@ -70,41 +70,17 @@ public class CraneHook : MonoBehaviour
             collider.isTrigger = true;
     }
 
-    private void OnClicked_Input(CallbackContext context)
+   private void OnClicked_Input(CallbackContext context)
     {
         if (hookedObject == null)
         {
+            if (selectedHookedObject == null) return;
+
             hookedObject = selectedHookedObject;
-            if (hookedObject != null)
-            {
-                var pivotTransform = this.pivot ? this.pivot : transform;
-                
-                // --- РАСЧЕТ ПОЗИЦИИ ---
-                // Нам нужно знать вектор от Пивота (крюка) до Якоря (точки на контейнере) в момент захвата.
-                Vector3 anchorWorldPosition = hookedObject.anchor ? hookedObject.anchor.position : hookedObject.transform.position;
-                Vector3 worldOffset = anchorWorldPosition - pivotTransform.position;
-                
-                // Переводим этот вектор в локальную систему координат пивота.
-                // Теперь, когда пивот будет вращаться, мы сможем повернуть этот локальный вектор обратно в мировой,
-                // и он всегда будет указывать на правильное место относительно крюка.
-                initialOffsetPos = Quaternion.Inverse(pivotTransform.rotation) * worldOffset;
-
-                // --- РАСЧЕТ ВРАЩЕНИЯ ---
-                // Сохраняем "разницу" между вращением объекта и вращением пивота.
-                // Формула: RotationObject = RotationPivot * Difference
-                // Следовательно: Difference = Inverse(RotationPivot) * RotationObject
-                rotationDifference = Quaternion.Inverse(pivotTransform.rotation) * hookedObject.transform.rotation;
-            }
-
-            if (SoundManager.Instance != null)
-                SoundManager.Instance.PlayHookAttach();
+            StartCoroutine(AlignAndAttach(hookedObject));
         }
         else
         {
-            if (SoundManager.Instance != null)
-                SoundManager.Instance.PlayHookAttach();
-            
-            // Сброс скоростей при отпускании
             var rb = hookedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -112,7 +88,53 @@ public class CraneHook : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
             }
 
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlayHookAttach();
+
             hookedObject = null;
         }
+    }
+    private IEnumerator AlignAndAttach(HookableObject target)
+    {
+        isAligning = true;
+
+        var pivotTransform = this.pivot ? this.pivot : transform;
+
+        while (true)
+        {
+            if (target == null) yield break;
+
+            float currentY = pivotTransform.eulerAngles.y;
+            float targetY = target.transform.eulerAngles.y;
+
+            float newY = Mathf.MoveTowardsAngle(
+                currentY,
+                targetY,
+                alignSpeed * 100f * Time.deltaTime);
+
+            pivotTransform.rotation = Quaternion.Euler(0f, newY, 0f);
+
+            float delta = Mathf.Abs(Mathf.DeltaAngle(newY, targetY));
+
+            if (delta < attachAngle)
+                break;
+
+            yield return null;
+        }
+
+        Vector3 anchorWorldPosition = target.anchor 
+            ? target.anchor.position 
+            : target.transform.position;
+
+        Vector3 worldOffset = anchorWorldPosition - pivotTransform.position;
+        initialOffsetPos = Quaternion.Inverse(pivotTransform.rotation) * worldOffset;
+
+        rotationDifference =
+            Quaternion.Inverse(pivotTransform.rotation) * target.transform.rotation;
+
+        isAligning = false;
+
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayHookAttach();
     }
 }
