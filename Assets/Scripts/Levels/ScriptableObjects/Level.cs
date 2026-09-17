@@ -1,16 +1,27 @@
 using UnityEngine;
 
+public enum CraneToolType
+{
+    Spereder,
+    Magnet
+}
+
 [CreateAssetMenu(fileName = "Level", menuName = "Scriptable Objects/Level")]
 public class Level : ScriptableObject
 {
     [SerializeField, TextArea]
-    private string _levelName;//Уровень 1
+    private string _levelName;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1
     [SerializeField, TextArea(3, 20)]
-    private string _description;//доставить 1 груз, далее для слудущего уровня доставить 2 груз и тд
+    private string _description;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1 пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2 пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ
     [SerializeField]
     private Sprite _image;
+
+    [SerializeField]
+    private CraneToolType _toolType;
 
     public string LevelName => _levelName;
     public string Description => _description;
     public Sprite Image => _image;
+
+    public CraneToolType ToolType => _toolType;
 }

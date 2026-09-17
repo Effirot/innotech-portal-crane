@@ -19,6 +19,10 @@ public class LevelsTransitions: MonoBehaviour
 
     private FinalDotTrigger _currentTrigger;
 
+    
+    [SerializeField]
+    private CraneToolController _toolController;
+
     public event Action<LevelData> OnLevelChanged;
     
     [SerializeField]
@@ -67,6 +71,13 @@ public class LevelsTransitions: MonoBehaviour
         _pastLevelIndex = currentLevelIndex;
         _levelsPoitsGroups[currentLevelIndex].SetActive(true);
 
+        var levelData = _levelsData[currentLevelIndex];
+
+        if (_toolController != null)
+        {
+            _toolController.SetTool(levelData.ToolType);
+        }
+
         _currentTrigger = _levelsPoitsGroups[currentLevelIndex].GetComponentInChildren<FinalDotTrigger>();
 
         if (_currentTrigger != null)
@@ -77,7 +88,7 @@ public class LevelsTransitions: MonoBehaviour
         //добавить активацию ui
 
         Debug.Log(_levelsData[currentLevelIndex].LevelName);
-        _uiLevel.UpdateUILevel(_levelsData[currentLevelIndex].LevelName, _levelsData[currentLevelIndex].Description);
+        _uiLevel.UpdateUILevel(levelData.LevelName, levelData.Description);
         Debug.Log(_levelsData[currentLevelIndex].Description);
     }
 
